@@ -9,8 +9,8 @@
       "env": {}
     },
     "atlassian": {
-      "command": "npx",
-      "args": ["-y", "mcp-atlassian"],
+      "command": "uvx",
+      "args": ["mcp-atlassian"],
       "env": {
         "JIRA_URL": "https://dnext-technology.atlassian.net",
         "JIRA_USERNAME": "vedat.hallac@dnext-technology.com",
