@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "tree-sitter": {
+      "command": "/home/vedat/.claude/mcp/tree-sitter-env/bin/python3",
+      "args": [
+        "-m",
+        "mcp_server_tree_sitter.server"
+      ],
+      "env": {}
+    },
+    "atlassian": {
+      "type": "sse",
+      "url": "https://mcp.atlassian.com/v1/sse"
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_TOKEN}"
+      }
+    }
+  }
+}

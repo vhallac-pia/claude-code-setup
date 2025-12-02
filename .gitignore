@@ -1,0 +1,17 @@
+# Session state and credentials
+settings.json
+.credentials.json
+history.jsonl
+
+# Session data directories
+debug/
+file-history/
+plans/
+projects/
+session-env/
+shell-snapshots/
+statsig/
+todos/
+
+# MCP virtual environments (large, reproducible)
+mcp/*/
