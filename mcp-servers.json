@@ -9,8 +9,16 @@
       "env": {}
     },
     "atlassian": {
-      "type": "sse",
-      "url": "https://mcp.atlassian.com/v1/sse"
+      "command": "npx",
+      "args": ["-y", "mcp-atlassian"],
+      "env": {
+        "JIRA_URL": "https://dnext-technology.atlassian.net",
+        "JIRA_USERNAME": "vedat.hallac@dnext-technology.com",
+        "CONFLUENCE_URL": "https://dnext-technology.atlassian.net/wiki",
+        "CONFLUENCE_USERNAME": "vedat.hallac@dnext-technology.com",
+        "JIRA_API_TOKEN": "${ATLASSIAN_API_TOKEN}",
+        "CONFLUENCE_API_TOKEN": "${ATLASSIAN_API_TOKEN}"
+      }
     },
     "github": {
       "type": "http",
