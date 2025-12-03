@@ -1,5 +1,179 @@
 # AI-SDLC Work Log - 2025-W49
 
+## 2025-12-03 - SRS Critique Analysis and CLAUDE.md Update
+
+**Duration:** 18m
+
+### Goals
+
+- Assess whether SRS critique issues block testing `/start-feature` and `/groom-stories` commands
+- Add markdown formatting rule to CLAUDE.md
+- Commit, push, and install claude-code files
+
+### Prompt Patterns
+
+#### Pattern: Scoped Feasibility Check
+
+**Context**: User preparing to test-drive a workflow with an imperfect input document
+
+**Prompt**:
+> In temp directory, I have an SRS (not the original one) and an associated critique that identified problems in the SRS. My main purpose is to test drive the SRS to story breakdown parts of the proposed SDLC... Do any of these items in the critique present a serious impediment to this experiment?
+
+**Why it worked**: Clearly scoped the question to "impediment to experiment" rather than asking for general advice. This let Claude focus on structural/parseability issues vs specification quality issues.
+
+**Outcome**: Clear assessment that no issues block the workflow test - critique issues are spec quality problems, not structural problems.
+
+---
+
+#### Pattern: Conciseness Correction
+
+**Context**: Claude added verbose example to a frequently-loaded file
+
+**Prompt**:
+> Isn't this too verbose for a file that is always in context?
+
+**Why it worked**: Short, pointed feedback referencing the specific concern (context window usage). Claude immediately condensed to one line.
+
+**Outcome**: Reduced from 20+ lines with examples to single-line rule.
+
+---
+
+#### Pattern: Multi-Step Task Chain
+
+**Context**: Ready to finalize changes
+
+**Prompt**:
+> great. Please commit this first. Then push the repository to origin. Finally install the files in claude-code in my current ~/.claude directory
+
+**Why it worked**: Clear sequence with dependencies. "First/then/finally" made execution order explicit.
+
+**Outcome**: All three tasks completed (with minor auth issue resolved via GITHUB_TOKEN hint).
+
+---
+
+### Outcomes
+
+**Files modified:**
+
+- `claude-code/CLAUDE.md` - Added markdown formatting rule
+
+**Commits:**
+
+```
+2ef9dfd Add markdown formatting rule to CLAUDE.md
+```
+
+**Other:**
+
+- Pushed 5 commits to origin/main
+- Installed claude-code files to `~/.claude/` (CLAUDE.md, 10 agents, 7 commands, 2 docs)
+
+### Lessons Learned
+
+1. When asking "will X block Y", explicitly state what Y is - enables focused analysis
+2. Context-aware files benefit from aggressive brevity - examples can live elsewhere
+
+---
+
+## 2025-12-03 - SRS Migration Validation: Original vs IEEE 29148 Template
+
+**Duration:** 14m
+
+### Goals
+
+- Verify completeness of SRS migration from original Confluence format to IEEE 29148 template
+- Identify any business-relevant content lost during migration
+- Update critique document to reflect issues remaining in migrated SRS
+
+### Prompt Patterns
+
+#### Pattern: Initial Task Definition with Context
+
+**Context**: User had three files in temp directory - original SRS, migrated SRS, and template - and wasn't certain if migration was complete.
+
+**Prompt**:
+> In temp directory, there is an SRS original, a template, and the same SRS migrated to the original. However, during the copy from confluence, the SRS was copied only partially. I am not certain if reading was correct, and the adapter SRS is correct or not. Please compare the new style SRS against the information found in the original, and see if it needs to be updated. Remember that the template's SRS is a business level only SRS - and technical information was intentionally dropped from the original.
+
+**Why it worked**:
+- Clear file identification (original, template, migrated)
+- Specific concern (partial copy, completeness uncertain)
+- Important constraint provided (technical info intentionally dropped)
+
+**Outcome**: Systematic comparison showing migration was substantially complete with enhancements.
+
+---
+
+#### Pattern: Requesting Specific Content Repetition
+
+**Context**: After identifying a missing use case, user wanted to review it quickly.
+
+**Prompt**:
+> Can you repeat the use case here for my convenience?
+
+**Why it worked**: Simple, direct request for specific content already processed. Avoided re-reading file.
+
+**Outcome**: Use case displayed inline for quick review.
+
+---
+
+#### Pattern: Domain Expert Validation/Challenge
+
+**Context**: AI identified a "missing" use case (SFS.MANAGE.ManualSpecificationEntry - admin direct DB access).
+
+**Prompt**:
+> No, this one doesn't make sense. A DB operator always has access to DB - it has no impact on the solution. Am I mistaken?
+
+**Why it worked**:
+- Direct challenge to AI's analysis
+- Provided reasoning (DB access is infrastructure, not feature)
+- Asked for validation ("Am I mistaken?")
+
+**Outcome**: AI agreed the use case was correctly excluded - it describes infrastructure capability, not solution functionality.
+
+---
+
+#### Pattern: Sequential Task Extension
+
+**Context**: After validating migration, user wanted critique document updated.
+
+**Prompt**:
+> Since the adapted SRS is mostly accurate, please examine the critique, and see if all points apply to the new style SRS as well.
+
+**Why it worked**: Built on completed task (migration validation) to extend to related task (critique update).
+
+**Outcome**: Comprehensive review showing 7 of 14 HIGH issues resolved, 7 remaining.
+
+---
+
+#### Pattern: File Organization Instruction
+
+**Context**: Two versions of critique needed - one for original, one for migrated.
+
+**Prompt**:
+> Since there are differences, adapt the critique to the new SRS as well. Make sure the file name is clear enough. Alternatively, rename the existing critique to say it is for the original SRS.
+
+**Why it worked**: Gave options for file organization rather than prescribing exact approach.
+
+**Outcome**: Renamed original critique, created new critique for migrated SRS with updated issue status.
+
+### Outcomes
+
+**Files created:**
+
+- `temp/SRS_PRND-27183_CRITIQUE_MIGRATED.md` - Updated critique for IEEE 29148 migrated SRS
+
+**Files modified:**
+
+- `temp/SRS_PRND-27183_CRITIQUE_WORK.md` → renamed to `temp/SRS_PRND-27183_CRITIQUE_ORIGINAL.md`
+
+### Lessons Learned
+
+1. Migration validation benefits from structured comparison tables showing what moved where, what was dropped, and what was added
+2. User domain expertise is essential for validating AI-identified "gaps" - some perceived gaps are actually correct design decisions
+3. A "missing use case" that describes capabilities outside the solution boundary (like direct DB access) should be excluded from SRS
+
+---
+
 ## 2025-12-03 - SRS Critique: PRND-27183 State Flow Specification
 
 **Duration:** 1h 19m
