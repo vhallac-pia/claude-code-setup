@@ -38,9 +38,17 @@ For each session file, parse JSONL and extract:
    - Last message timestamp → session end
    - Session date for the heading
 
+## Work Log File
+
+Work logs are organized weekly using ISO week numbers:
+- File pattern: `~/.claude/docs/<project-slug>_work-log_YYYY-WXX.md`
+- Example: `ai-sdlc_work-log_2025-W49.md`
+- Determine current week: `date +%Y-W%V`
+- If the weekly file doesn't exist, create it with a brief header
+
 ## Work Log Format
 
-Generate a work log entry following the format in `~/.claude/docs/<project>_work-log.md`:
+Generate a work log entry following this format:
 
 ```markdown
 ## YYYY-MM-DD - Brief Session Title
@@ -117,8 +125,10 @@ Generate a work log entry following the format in `~/.claude/docs/<project>_work
    - Any patterns to add/remove
    - Permission to append to work log file
 3. **On confirmation**:
-   - Append entry to `~/.claude/docs/<project-slug>_work-log.md`
-   - Place after the Overview section, before existing entries
+   - Determine current ISO week (`date +%Y-W%V`)
+   - Append entry to `~/.claude/docs/<project-slug>_work-log_<week>.md`
+   - If file doesn't exist, create with header: `# <Project> Work Log - <week>`
+   - Place new entries at the TOP of the file (after header)
    - Clean up `session-start-marker.txt` if it exists
 
 ## Project Slug Detection
