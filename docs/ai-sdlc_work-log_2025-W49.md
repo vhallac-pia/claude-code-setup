@@ -2,6 +2,8 @@
 
 ## 2025-12-03 - SRS Critique: PRND-27183 State Flow Specification
 
+**Duration:** 1h 19m
+
 ### Goals
 
 - Perform systematic critique of existing SRS document (PRND-27183) before implementation

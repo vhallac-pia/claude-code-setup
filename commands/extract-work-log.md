@@ -34,8 +34,9 @@ For each session file, parse JSONL and extract:
    - External resources created (Confluence pages, etc.)
 
 3. **Session metadata**:
-   - First user message timestamp → session start
-   - Last message timestamp → session end
+   - **Duration**: Calculate from the **initial task-defining prompt** (not first message of day) to session end
+   - If multiple unrelated tasks in one day, calculate duration per task
+   - Format duration as `Xh Ym`
    - Session date for the heading
 
 ## Work Log File
@@ -52,6 +53,8 @@ Generate a work log entry following this format:
 
 ```markdown
 ## YYYY-MM-DD - Brief Session Title
+
+**Duration:** Xh Ym
 
 ### Goals
 
