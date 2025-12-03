@@ -89,13 +89,18 @@ Generate a work log entry following the format in `~/.claude/docs/<project>_work
 
 ## Selection Criteria for Prompt Patterns
 
-**Include**:
+**Always include first (most important)**:
+
+- **The initial task-defining prompt** - The prompt that kicked off the session's main work. This establishes scope, focus areas, and success criteria. Often the most valuable pattern for others to learn from.
+
+**Also include**:
 
 - Prompts that required iteration (show refinement)
 - Effective single-shot prompts
 - User corrections that improved output
 - Interrupt/redirect patterns
 - Collaborative decision-making
+- Domain clarification exchanges
 
 **Skip**:
 
