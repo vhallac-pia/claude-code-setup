@@ -7,47 +7,133 @@ This file documents AI-assisted development sessions for the AI-SDLC project. It
 1. **Historical record** of accomplishments across sessions
 2. **Prompt engineering reference** for learning effective interaction patterns
 
-### Instructions for AI Agents
+---
 
-When concluding a session or when asked to update this log, follow these guidelines:
+## 2025-12-03 - SRS Critique: PRND-27183 State Flow Specification
 
-**Adding a new session:**
+### Goals
 
-1. Add a new H2 heading with format: `## YYYY-MM-DD - Brief Session Title`
-2. Place new sessions at the TOP (after this Overview section)
-3. Include these subsections:
-   - `### Goals` - What the user wanted to accomplish
-   - `### Prompt Patterns` - Effective prompts with context (see format below)
-   - `### Outcomes` - What was accomplished, files changed
-   - `### Lessons Learned` - Optional: iterations, corrections, anti-patterns
+- Perform systematic critique of existing SRS document (PRND-27183) before implementation
+- Identify logical gaps, inconsistencies, and under-specified requirements
+- Evaluate document from consumer perspective (can service be implemented and used?)
+- Recommend architectural improvements
 
-**Prompt Pattern format:**
+### Prompt Patterns
 
-```markdown
-#### Pattern: [Task Type]
+#### Pattern: Comprehensive Review Task Definition
 
-**Context**: [What preceded this prompt, why it was needed]
+**Context**: User had an existing SRS document that needed critical review before implementation.
 
 **Prompt**:
-> [Exact or paraphrased user prompt]
+> There is a file SRS_PRND-27183_ORIGINAL.md in temp. I want you to read this file, understand its purpose, and critique it. I am especially interested in logical gaps, under-/over- specified sections, gaps in requirements, unclear intent. Also review what is specified where: scenarios, detailed specifications, functional requirements, BVRs.
 
-**Why it worked**: [What made this prompt effective]
+**Follow-up**:
+> Be systematic about it, and keep track of current thinking in a helper file if needed (I do not need such a file, but you may need such a file as an externalized context to survive context compressions).
 
-**Outcome**: [Brief result]
-```
+**Why it worked**:
+- Clear scope: "read, understand, critique"
+- Specific focus areas: logical gaps, over/under-specification, unclear intent
+- Structural review: what belongs where (scenarios vs FRs vs BVRs)
+- Practical advice: use external file to survive context compression
 
-**What to capture:**
+**Outcome**: Systematic critique with 21 categorized issues across HIGH/MEDIUM/LOW severity, organized by type.
 
-- Prompts that required iteration (show the refinement)
-- Effective single-shot prompts (explain why they worked)
-- User corrections that improved output
-- Task delegation patterns (when user directed vs. AI proposed)
+---
 
-**What to skip:**
+#### Pattern: Domain Clarification Through Correction
 
-- Routine confirmations ("yes", "ok", "good")
-- Technical errors unrelated to prompting (e.g., network issues)
-- Redundant examples of the same pattern
+**Context**: AI identified potential gaps that weren't actually gaps due to domain-specific patterns.
+
+**Prompt sequence**:
+> For the gaps, you can consider wholistic updates as the data document. There is no "delete a state"... So long as we have validation rules that check the consistency of the document, deleting states or transitions are not necessary to cover individually.
+
+> There need not be a final state. It is possible that a service just loops over states - like allowing retired states to be reactivated.
+
+> An update that sets the state to the same value can be considered to not include the state in the update. So self loops should not even touch the state validation service.
+
+**Why it worked**: User corrected AI's assumptions about state machine semantics incrementally. Each correction built understanding without requiring full re-explanation.
+
+**Outcome**: AI refined critique to focus on actual gaps rather than perceived ones.
+
+---
+
+#### Pattern: Iterative Gap Discovery
+
+**Context**: After initial review, user revealed additional domain constraints.
+
+**Prompt**:
+> The entity reference that tells me what entity gets affected by a given specification. There are two big problems there. Let me start with the first: an EntityRef is a pointer to a single *instance* of a resource. What we need from a state spec is a resource *type* or *kind*.
+
+**Follow-up**:
+> The second is that, along with the resource type, I need the state field name/path. DNext provides TMF APIs, and the field may be named state, status, lifecycleState, etc.
+
+**Why it worked**: User revealed gaps one at a time with explanation. Allowed AI to fully understand each issue before moving to next.
+
+**Outcome**: Identified two critical missing requirements (EntityTypeRef, targetStateFieldPath).
+
+---
+
+#### Pattern: Consumer Perspective Reframe
+
+**Context**: AI had been reviewing from API implementer perspective only.
+
+**Prompt**:
+> Now you understand more about the application domain and intent. Please do another review and see if there are any other problems. I need this SRS to reach a state where 1. we can implement a service 2. the service is actually useful: the consumers need to be able to figure out what state spec to use, and whether a given PATCH operation that touches state will be allowed.
+
+**Why it worked**: Explicit success criteria from two perspectives (implementer AND consumer). Triggered discovery of consumer-facing gaps.
+
+**Outcome**: Added 5 new HIGH severity issues (discovery pattern, entityStatusMapping semantics, transition lookup, etc.).
+
+---
+
+#### Pattern: Scope Recommendation with Options
+
+**Context**: AI was proposing to add many consumer requirements to the SRS.
+
+**Prompt**:
+> The transition lookup, validation, etc. should be a separate SRS for consumers. The same goes for missing transitions. I think the two consumer scenarios should be removed and a fuller SRS should be written instead of fattening up this SRS. But present it as an either/or => either reduce scenarios, or add to them, and extend scope to go beyond writing/updating a REST service.
+
+**Why it worked**: User provided architectural insight (separation of concerns) and asked for options rather than single recommendation.
+
+**Outcome**: Critique restructured with clear Option A (reduce scope) vs Option B (expand scope) recommendation.
+
+---
+
+### Outcomes
+
+**Files created:**
+
+- `temp/SRS_PRND-27183_CRITIQUE_WORK.md` - Comprehensive critique document (21 issues)
+- Confluence page 1403912194 - Critique uploaded to personal space
+
+**Files modified:**
+
+- `temp/SRS_PRND-27183_ORIGINAL.md` - Updated with full content from Confluence
+
+**Issues identified:**
+
+| Severity | Count | Key Examples |
+|----------|-------|--------------|
+| HIGH | 14 | stateType/stateCategory mismatch, FRs duplicate UCs, missing BVRs, wrong EntityRef type, missing targetStateFieldPath, consumer discovery undefined |
+| MEDIUM | 4 | Empty FR traceability, missing lifecycle UC, lifecycleStatus not enumerated |
+| LOW | 3 | Data model FRs, duplicate constraints, HTTP methods in BVRs |
+
+**Architectural recommendation:**
+
+- Option A (recommended): Remove SFS.VALIDATE.* consumer scenarios, keep as REST API spec, write separate Consumer SRS
+- Option B: Expand scope to fully specify consumer behavior, rename to "State Flow Management Service"
+
+### Lessons Learned
+
+1. **Domain knowledge is iterative**: AI's initial gaps analysis had false positives (self-loops, final states). User corrections were essential.
+
+2. **Consumer perspective reveals different gaps**: Reviewing only from implementer view missed critical usability issues (discovery, lookup semantics).
+
+3. **Separation of concerns applies to specs**: Mixing API definition with consumer behavior patterns creates a document that does neither well.
+
+4. **Working document survives context compression**: Keeping critique in external file (`CRITIQUE_WORK.md`) allowed review to span multiple context windows.
+
+5. **Either/or recommendations**: When AI sees multiple valid approaches, presenting options with tradeoffs is more useful than picking one.
 
 ---
 
