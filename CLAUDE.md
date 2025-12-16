@@ -33,28 +33,8 @@
 - MUST NOT create separate branches for child stories (#1, #2) or review items (#1.R1)
 - MUST NOT create branches in dnext-dev-support repo (documentation only)
 
-## Agent Usage
+# Reference Management
 
-Key agents for workflow stages:
-
-| Agent | When to Use |
-|-------|-------------|
-| story-implementation-planner | When picking up a BACKLOG story to generate implementation guide |
-| code-reviewer | When child story implementation complete, before REVIEWING |
-| merge-readiness-checker | Before creating PR or providing merge instructions |
-| design-updater | When story DONE, to update module design.md |
-
-See `agents/` directory for full agent definitions.
-
-## Skills Reference
-
-Detailed domain knowledge auto-activates via skills:
-
-| Skill | Auto-activates When |
-|-------|---------------------|
-| dnext-architecture | Working with DNext code, TMF APIs, planning implementation |
-| story-workflow | Managing story states, lifecycle, parent-child relationships |
-| story-conventions | Editing .stories.md files, formatting stories |
-| spring-testing | Writing Java/Spring tests |
-
-See `skills/` directory for full skill definitions.
+- Skills: self-contained in `~/.claude/skills/{skill}/` - embed all reference docs within
+- Other components: use `~/.claude/references/{component}/` when >3 docs
+- Never reference files outside ~/.claude
