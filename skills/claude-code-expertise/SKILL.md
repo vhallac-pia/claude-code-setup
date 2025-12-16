@@ -46,6 +46,26 @@ description: Guides optimal design of Claude Code components (agents, skills, co
 - Custom system prompt for behavioral guidance
 - Configured tool access (only what's necessary)
 
+**File Structure:**
+```
+~/.claude/agents/
+├── agent-name.md              # Full agent content (200-800 lines)
+│   ├── YAML frontmatter: name, description, model
+│   ├── Behavioral guidance and workflow
+│   └── References to agent-name/*.md files
+└── agent-name/                # Reference documentation
+    ├── reference-1.md         # Detailed patterns
+    ├── reference-2.md         # Examples
+    └── examples/              # Code samples
+        └── example.java
+```
+
+**Encapsulation Principles:**
+- ✅ Self-contained: All references in `~/.claude/agents/{agent}/`
+- ✅ Relative paths resolve to `~/.claude/agents/{agent}/<path>`
+- ✅ Encapsulation over DRY: Duplicate docs if needed across agents
+- ✅ YAML frontmatter: name, description, model (no dashes in name)
+
 **Good design:**
 - ✅ Focused single responsibility (1-2 sentence description)
 - ✅ Size: 200-800 lines of behavioral guidance
@@ -57,8 +77,9 @@ description: Guides optimal design of Claude Code components (agents, skills, co
 - ❌ Unfocused scope (too many responsibilities)
 - ❌ Pre-loaded documentation (>1,000 lines embedded)
 - ❌ Over-engineering (agent for single operation)
+- ❌ External references outside ~/.claude/agents/{agent}/
 
-**Pattern:** Behavioral guidance only, delegate knowledge to skills/references
+**Pattern:** Behavioral guidance in .md file, detailed knowledge in agent/ subdirectory
 
 ### Skills: Auto-Activating Capabilities
 
@@ -113,25 +134,32 @@ description: Guides optimal design of Claude Code components (agents, skills, co
 
 ## Documentation Organization
 
-### Reference Library Pattern
+### Self-Contained Component Pattern
 
 ```
 ~/.claude/
-├── agents/           (behavioral guidance, 200-800 lines each)
-├── skills/           (auto-activating knowledge, 1-5KB each)
-├── commands/         (workflow orchestration, 100-200 lines each)
-├── docs/            (project work logs, analyses)
-└── references/      (on-demand detailed knowledge)
-    ├── shared/      (knowledge used by multiple components)
-    └── {component-name}/  (component-specific references)
+├── agents/
+│   ├── agent-name.md           # Full agent (200-800 lines)
+│   └── agent-name/             # Agent's reference files
+│       ├── reference-1.md
+│       └── examples/
+├── skills/
+│   └── skill-name/             # Self-contained skill
+│       ├── SKILL.md            # Main skill (with YAML frontmatter)
+│       ├── reference-1.md      # Supporting docs
+│       └── examples/
+├── commands/
+│   ├── command-name.md         # Command definition
+│   └── command-name/           # Command's references (if needed)
+└── docs/                       # Project work logs, analyses
 ```
 
-**Shared reference pattern:**
-- Multiple skills/agents can reference same docs
-- Single source of truth
-- Update once, benefits all
-- Token cost only when loaded
-- Persistence means no re-reading in same session
+**Encapsulation Principles:**
+- Each component is self-contained in its directory
+- Reference files live alongside the component
+- Relative paths resolve to component's directory
+- Encapsulation over DRY: Duplicate docs if multiple components need them
+- No shared references directory needed
 
 ---
 
@@ -148,10 +176,11 @@ description: Guides optimal design of Claude Code components (agents, skills, co
 **Wrong:** Load all reference docs at session start
 **Right:** Read documentation when needed (content persists once loaded)
 
-### ❌ Duplicate Knowledge
+### ❌ External References
 
-**Wrong:** Copy validation rules into 5 different agents
-**Right:** Create shared reference file, multiple components read same file
+**Wrong:** Reference docs outside component's directory (`~/.claude/references/shared/`)
+**Right:** Self-contained components with references in `{component}/` subdirectory
+**Note:** Encapsulation over DRY - duplicate docs if needed for independence
 
 ### ❌ Skill Proliferation
 
