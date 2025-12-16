@@ -356,6 +356,9 @@ Comprehensive guide to tracking and optimizing components:
 
 ## Evidence Base
 
+**Foundational Guide:**
+- Comprehensive synthesis: [foundations.md](foundations.md) - Combines Anthropic engineering insights, empirical study, and official documentation
+
 **Empirical studies:**
 - Context management study: [context-study-findings.md](context-study-findings.md)
 - Architecture analysis: [architecture-analysis-summary.md](architecture-analysis-summary.md)
