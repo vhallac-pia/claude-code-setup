@@ -1,3 +1,8 @@
+---
+name: claude-code-expertise
+description: Guides optimal design of Claude Code components (agents, skills, commands) based on empirical evidence. Covers context management principles, component design patterns, decision frameworks, and token optimization. Auto-activates when designing agents, skills, commands, or discussing Claude Code architecture.
+---
+
 # Claude Code Component Design Expertise
 
 **Auto-activates when:** Designing agents, skills, commands, or discussing Claude Code architecture
@@ -170,7 +175,7 @@
 **Size target:** 200-800 lines of behavioral guidance
 
 **Detailed framework:**
-- Read ~/.claude/references/claude-code-expertise/design-frameworks.md
+- Read [design-frameworks.md](design-frameworks.md)
 
 ### When Designing a New Skill
 
@@ -185,7 +190,7 @@
 **Size target:** 1-5KB for comprehensive, or 1KB + references
 
 **Detailed framework:**
-- Read ~/.claude/references/claude-code-expertise/design-frameworks.md
+- Read [design-frameworks.md](design-frameworks.md)
 
 ### When Designing a New Command
 
@@ -199,7 +204,7 @@
 **Size target:** 100-200 lines of orchestration
 
 **Detailed framework:**
-- Read ~/.claude/references/claude-code-expertise/design-frameworks.md
+- Read [design-frameworks.md](design-frameworks.md)
 
 ---
 
@@ -290,7 +295,7 @@ Need to create something?
 - [ ] Size: 100-200 lines?
 
 **Detailed monitoring guide:**
-- Read ~/.claude/references/claude-code-expertise/monitoring-optimization.md
+- Read [monitoring-optimization.md](monitoring-optimization.md)
 
 ---
 
@@ -304,7 +309,7 @@ Practical examples of well-designed agents:
 - implementer (TDD pattern)
 - Common patterns and anti-patterns
 
-**Read:** ~/.claude/references/claude-code-expertise/agent-design-examples.md
+**Read:** [agent-design-examples.md](agent-design-examples.md)
 
 ### Skill Design Examples
 
@@ -314,7 +319,7 @@ Practical examples of well-designed skills:
 - dnext-code-gen (domain-specific)
 - Size estimation guide
 
-**Read:** ~/.claude/references/claude-code-expertise/skill-design-examples.md
+**Read:** [skill-design-examples.md](skill-design-examples.md)
 
 ### Command Design Examples
 
@@ -324,7 +329,7 @@ Practical examples of well-designed commands:
 - /create-api (parameterized command)
 - Common patterns and anti-patterns
 
-**Read:** ~/.claude/references/claude-code-expertise/command-design-examples.md
+**Read:** [command-design-examples.md](command-design-examples.md)
 
 ### Design Decision Frameworks
 
@@ -334,7 +339,7 @@ Detailed questionnaires for designing components:
 - Command design framework (4 questions with validation)
 - Complete templates for each component type
 
-**Read:** ~/.claude/references/claude-code-expertise/design-frameworks.md
+**Read:** [design-frameworks.md](design-frameworks.md)
 
 ### Monitoring and Optimization
 
@@ -345,15 +350,15 @@ Comprehensive guide to tracking and optimizing components:
 - Optimization techniques
 - Measurement framework
 
-**Read:** ~/.claude/references/claude-code-expertise/monitoring-optimization.md
+**Read:** [monitoring-optimization.md](monitoring-optimization.md)
 
 ---
 
 ## Evidence Base
 
 **Empirical studies:**
-- Context management study: ~/.claude/references/claude-code-expertise/context-study-findings.md
-- Architecture analysis: ~/.claude/references/claude-code-expertise/architecture-analysis-summary.md
+- Context management study: [context-study-findings.md](context-study-findings.md)
+- Architecture analysis: [architecture-analysis-summary.md](architecture-analysis-summary.md)
 
 **Official documentation:**
 - Claude Code agent design guidelines (consult via claude-code-guide agent)
