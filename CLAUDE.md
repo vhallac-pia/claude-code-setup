@@ -35,6 +35,7 @@
 
 # Reference Management
 
-- Skills: self-contained in `~/.claude/skills/{skill}/` - embed all reference docs within
-- Other components: use `~/.claude/references/{component}/` when >3 docs
+- Skills: relative paths resolve to `~/.claude/skills/{skill}/<path>`
+- Agents: relative paths resolve to `~/.claude/agents/{agent}/<path>`
+- Commands: relative paths resolve to `~/.claude/commands/{command}/<path>`
 - Never reference files outside ~/.claude
