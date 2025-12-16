@@ -10,17 +10,17 @@ Domain knowledge for AI-assisted generation of DNext TMF API services from OpenA
 ## Reference Materials
 
 **Core Documentation:**
-- `~/.claude/docs/code-generation/polymorphic-mapper-pattern.md` - Critical polymorphic dispatch patterns
-- `~/.claude/docs/code-generation/entity-generation-guide.md` - Entity creation rules
-- `~/.claude/docs/code-generation/mongodb-storage-patterns.md` - Storage pattern selection
-- `~/.claude/docs/code-generation/mapstruct-conventions.md` - MapStruct configuration
-- `~/.claude/docs/code-generation/configuration-reference.md` - YAML config structure
-- `~/.claude/docs/code-generation/validation-checklist.md` - Post-generation validation
-- `~/.claude/docs/code-generation/known-issues-fixes.md` - Common problems and solutions
+- [polymorphic-mapper-pattern.md](polymorphic-mapper-pattern.md) - Critical polymorphic dispatch patterns
+- [entity-generation-guide.md](entity-generation-guide.md) - Entity creation rules
+- [mongodb-storage-patterns.md](mongodb-storage-patterns.md) - Storage pattern selection
+- [mapstruct-conventions.md](mapstruct-conventions.md) - MapStruct configuration
+- [configuration-reference.md](configuration-reference.md) - YAML config structure
+- [validation-checklist.md](validation-checklist.md) - Post-generation validation
+- [known-issues-fixes.md](known-issues-fixes.md) - Common problems and solutions
 
 **Examples:**
-- `~/.claude/references/code-generation/examples/trouble-ticket/` - Polymorphic entity example
-- `~/.claude/references/code-generation/examples/customer/` - Simple entity example
+- [examples/trouble-ticket/](examples/trouble-ticket/) - Polymorphic entity example
+- [examples/customer/](examples/customer/) - Simple entity example
 
 **DNext Integration:** (REQUIRED)
 - `dnext-dev-support/references/code-generation/` - Framework-specific patterns and integration
